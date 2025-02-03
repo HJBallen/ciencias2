@@ -7,7 +7,7 @@ ACTIVIDADES_RUIDO = {
 ACTIVIDADES_HABITABILIDAD = {
   "Vivienda":(50,55),
   "Deportiva":(80,85),
-  "Entretenimiento":(100,105)
+  "Entretenimiento":(100,120)
 }
 
 MATRIZ_AD = [0,0,1,1] 

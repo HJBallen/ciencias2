@@ -1,5 +1,6 @@
 from modelos.actividad import Actividad
 from modelos.material import Material
+from constantes.constantes  import ACTIVIDADES_HABITABILIDAD
 from logica.logica import sumar_decibelios
 
 class Habitacion:
@@ -9,28 +10,39 @@ class Habitacion:
     self.actividad = actividad
     self.material = material
     self.ruidoRecibido = ruidoRecibido
-    self.ruidoEmitido = ruidoEmitido
+    self.ruidoEmitido = 0.0
+    self.determinarRuidoEmitido()
   
   def __repr__(self):
-    return f"Habitacion {self.numero} Actividad{self.actividad.nombre} Ruido Generado: {self.actividad.ruidoGenerado}, Ruido emitido: {self.ruidoGenerado} Ruido recibido: {self.ruidoRecibido}, {self.habitabilidad}"
+    return f"Habitacion {self.numero} Actividad: {self.actividad.nombre} Ruido Generado: {self.actividad.ruidoGenerado}, Ruido emitido: {self.ruidoEmitido} Ruido recibido: {self.ruidoRecibido}, {self.habitabilidad}"
 
   def determinarHabitabilidad(self):
     match self.actividad.nombre:
       case "Vivienda":
-        if self.ruidoRecibido > 6.4:
+        if self.ruidoRecibido > ACTIVIDADES_HABITABILIDAD["Vivienda"][1] :
           self.habitabilidad = "No habitable"
-        if self.ruidoRecibido < 6.5 and self.ruidoRecibido > 5:
+        if self.ruidoRecibido >ACTIVIDADES_HABITABILIDAD["Vivienda"][0] and self.ruidoRecibido <= ACTIVIDADES_HABITABILIDAD["Vivienda"][1]:
           self.habitabilidad = "Ruido moderado"
-      case "Musica":
-                pass
-      case "Deporte":
-                pass
+        if self.ruidoRecibido <= ACTIVIDADES_HABITABILIDAD["Vivienda"][0]:
+          self.habitabilidad = "Habitable"
       case "Entretenimiento":
-        pass
+        if self.ruidoRecibido > ACTIVIDADES_HABITABILIDAD["Entretenimiento"][1] :
+          self.habitabilidad = "No habitable"
+        if self.ruidoRecibido >ACTIVIDADES_HABITABILIDAD["Entretenimiento"][0] and self.ruidoRecibido <= ACTIVIDADES_HABITABILIDAD["Entretenimiento"][1]:
+          self.habitabilidad = "Ruido moderado"
+        if self.ruidoRecibido <= ACTIVIDADES_HABITABILIDAD["Entretenimiento"][0]:
+          self.habitabilidad = "Habitable"
+      case "Deportiva":
+        if self.ruidoRecibido > ACTIVIDADES_HABITABILIDAD["Deportiva"][1] :
+          self.habitabilidad = "No habitable"
+        if self.ruidoRecibido >ACTIVIDADES_HABITABILIDAD["Deportiva"][0] and self.ruidoRecibido <= ACTIVIDADES_HABITABILIDAD["Deportiva"][1]:
+          self.habitabilidad = "Ruido moderado"
+        if self.ruidoRecibido <= ACTIVIDADES_HABITABILIDAD["Deportiva"][0]:
+          self.habitabilidad = "Habitable"
     pass
 
   def determinarRuidoEmitido(self):
-    self.ruidoEmitido = self.actividad.ruidoGenerado * self.material.reduccionRuido
+    self.ruidoEmitido = self.actividad.ruidoGenerado * (1-self.material.reduccionRuido)
 
   def recibirRuido(self,ruido):
     if self.ruidoRecibido == 0.0:

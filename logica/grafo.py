@@ -15,7 +15,6 @@ def crear_grafo(edificio:Edificio):
   edges= generar_aristas(nodos)
 
   grafo.add_nodes_from(nodos)
-  print(edges)
   grafo.add_edges_from(edges)
   dibujar_grafo(grafo)
 

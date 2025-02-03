@@ -1,7 +1,7 @@
 import numpy.random as random
 
 
-from constantes.constantes  import ACTIVIDADES
+from constantes.constantes  import ACTIVIDADES_RUIDO
 
 class Actividad:
 
@@ -12,9 +12,9 @@ class Actividad:
 
   def determinarRuidoGenerado(self):
     ruido= 0.0
-    for actividad in ACTIVIDADES:
+    for actividad in ACTIVIDADES_RUIDO:
       if self.nombre == actividad:
-        ruido = random.randint(ACTIVIDADES[actividad][0],ACTIVIDADES[actividad][1])
+        ruido = random.randint(ACTIVIDADES_RUIDO[actividad][0],ACTIVIDADES_RUIDO[actividad][1])
         break
     return ruido
 
